@@ -11,7 +11,8 @@ pub struct OciError {
     /// A message associated with the error
     pub message: String,
     /// Unstructured data associated with the error
-    pub detail: serde_json::Value,
+    #[serde(default)]
+    pub detail: Option<serde_json::Value>,
 }
 
 impl std::error::Error for OciError {

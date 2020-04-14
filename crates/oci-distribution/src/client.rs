@@ -216,7 +216,7 @@ impl Client {
     /// be set on all OCI Registry request.
     fn auth_headers(&self) -> HeaderMap {
         let mut headers = HeaderMap::new();
-        headers.insert("Accept", "application/vnd.docker.distribution.manifest.v2+json,application/vnd.docker.distribution.manifest.list.v2+json".parse().unwrap());
+        headers.insert("Accept", "application/vnd.oci.image.manifest.v1+json,application/vnd.docker.distribution.manifest.v2+json,application/vnd.docker.distribution.manifest.list.v2+json".parse().unwrap());
 
         if let Some(bearer) = self.token.as_ref() {
             headers.insert("Authorization", bearer.bearer_token().parse().unwrap());
@@ -259,6 +259,7 @@ impl ClientProtocol {
 /// A token granted during the OAuth2-like workflow for OCI registries.
 #[derive(serde::Deserialize, Default)]
 struct RegistryToken {
+    #[serde(alias = "token")]
     access_token: String,
 }
 
